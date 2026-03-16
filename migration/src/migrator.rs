@@ -1,5 +1,6 @@
 pub use sea_orm_migration::prelude::*;
 
+#[path = "m20260316_000001_create_devices_table.rs"]
 mod m20260316_000001_create_devices_table;
 
 pub struct Migrator;
@@ -8,7 +9,7 @@ pub struct Migrator;
 impl MigratorTrait for Migrator {
     fn migrations() -> Vec<Box<dyn MigrationTrait>> {
         vec![Box::new(
-            m20260316_000001_create_devices_table::Migration,
+            self::m20260316_000001_create_devices_table::Migration,
         )]
     }
 }

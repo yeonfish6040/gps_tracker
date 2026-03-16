@@ -7,15 +7,20 @@ pub struct Migration;
 impl MigrationTrait for Migration {
     async fn up(&self, manager: &SchemaManager) -> Result<(), DbErr> {
         manager
+            .get_connection()
+            .execute_unprepared(r#"CREATE EXTENSION IF NOT EXISTS "pgcrypto""#)
+            .await?;
+
+        manager
             .create_table(
                 Table::create()
                     .table(Device::Table)
                     .if_not_exists()
                     .col(
                         ColumnDef::new(Device::Id)
-                            .integer()
+                            .uuid()
+                            .extra("DEFAULT gen_random_uuid()")
                             .not_null()
-                            .auto_increment()
                             .primary_key(),
                     )
                     .col(ColumnDef::new(Device::Name).string_len(255).not_null())
