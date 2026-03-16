@@ -788,6 +788,7 @@ name = "gps_tracker"
 version = "0.1.0"
 dependencies = [
  "axum",
+ "chrono",
  "dotenvy",
  "sea-orm",
  "serde",
